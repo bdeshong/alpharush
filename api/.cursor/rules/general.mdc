@@ -1,0 +1,8 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+Don't hallucinate.
+Always use a Python virtual environment.
+Never install dependencies globally.

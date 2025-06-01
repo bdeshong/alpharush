@@ -1,0 +1,10 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+Follow common Python standards, like PEP standards
+Always use type hints on parameters and return types
+Enforce standards using tools like ruff.
+Enforce common standards for sorting imports.
+Ensure that no file has star imports, like `from foo import *`.  Star imports are to be forbidden.

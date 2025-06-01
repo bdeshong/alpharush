@@ -1,0 +1,7 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+Use a common directory structute for Python web-based API projects.
+Ensure that code is well organized and has a simple, but not overly complex respect for separation of concerns.

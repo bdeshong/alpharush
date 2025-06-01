@@ -1,0 +1,9 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+Use the latest version of FastAPI
+Always adhere to RESTful practices in how endpoints are named
+Public-facing IDs should always be UUIDs
+Never expose an integer ID from the backend in a URI, request body, or response body

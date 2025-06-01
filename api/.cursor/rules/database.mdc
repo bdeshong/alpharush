@@ -1,0 +1,13 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+When data modeling, always use singular table names
+All non-reference tables should have columns id, uuid, created, and updated.
+id should be a bigint, not null, and the primary key
+uuid should be a varchar(36), not null, and have a unique key on it.
+created should be a datetime and not null.
+Default the created column to CURRENT_TIMESTAMP.
+updated should be a datetime and nullable as it will only be set when the row is updated.
+Ensure that updated is set to CURRENT_TIMESTAMP when a row is updated.

@@ -1,0 +1,6 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+Use SQLAlchemy models to represent all database tables.

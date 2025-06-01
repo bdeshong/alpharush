@@ -1,0 +1,10 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+Always use reference tables to enum-like values.
+For example, if you have a table of animal breeds, the table should be called `ref_animal_breed`.
+All ref tables should have only columns id and value.  ID should be a bigint and the primary key
+id should always be auto-incrementing.
+There should be a unique key on the `value` column.
