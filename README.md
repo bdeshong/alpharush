@@ -26,6 +26,19 @@ alpharush/
 │   ├── docker-compose.yaml  # Docker configuration
 │   └── requirements.txt   # Python dependencies
 └── web/                  # Frontend application
+    ├── src/             # Source code
+    │   ├── App.tsx     # Main application component
+    │   ├── main.tsx    # Application entry point
+    │   ├── components/ # React components
+    │   ├── hooks/      # Custom React hooks
+    │   ├── types/      # TypeScript type definitions
+    │   └── utils/      # Utility functions
+    ├── public/         # Static assets
+    ├── index.html      # HTML entry point
+    ├── package.json    # Node.js dependencies
+    ├── tsconfig.json   # TypeScript configuration
+    ├── vite.config.ts  # Vite configuration
+    └── tailwind.config.js  # Tailwind CSS configuration
 ```
 
 ## Backend Setup
