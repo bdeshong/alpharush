@@ -153,6 +153,8 @@ function Game() {
       <div className="max-w-2xl w-full space-y-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-primary-600 mb-4">AlphaRush</h1>
+          {/* Instructions */}
+          <p className="text-xl text-gray-700 mb-4">Enter the letters in alphabetical order.</p>
           <p className="text-2xl font-semibold mb-8">{phrase.phrase}</p>
         </div>
 
