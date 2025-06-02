@@ -1,23 +1,21 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from sqlalchemy import func
-import random
+from typing import List
 
-from models import Phrase
-from schemas import PhraseResponse
-from dependencies import get_session
+from .. import models, schemas, database
 
-router = APIRouter(
-    prefix="/phrase",
-    tags=["phrase"]
-)
+router = APIRouter(prefix="/phrase", tags=["phrases"])
 
-@router.get("/random", response_model=PhraseResponse)
-def get_random_phrase(session: Session = Depends(get_session)):
-    # Get total count of phrases
-    total = session.query(func.count(Phrase.uuid)).scalar()
-    # Generate random offset
-    random_offset = random.randint(0, total - 1)
-    # Get random phrase
-    phrase = session.query(Phrase).offset(random_offset).first()
-    return phrase
+@router.get("/random", response_model=schemas.Phrase)
+def get_random_phrase(db: Session = Depends(database.get_db)):
+    # Fetch a random phrase from the database
+    random_phrase = db.query(models.Phrase).order_by("RAND()").limit(1).first()
+    if random_phrase is None:
+        raise HTTPException(status_code=404, detail="No phrases found")
+    return random_phrase
+
+# Optional: endpoint to get all phrases (for testing/debugging)
+@router.get("/", response_model=List[schemas.Phrase])
+def get_all_phrases(db: Session = Depends(database.get_db)):
+    phrases = db.query(models.Phrase).all()
+    return phrases

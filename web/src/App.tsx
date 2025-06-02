@@ -57,12 +57,27 @@ function Game() {
 
     const timer = setInterval(() => {
       const now = new Date()
-      const elapsed = Math.floor((now.getTime() - startTime.getTime()) / 1000)
+      const elapsed = (now.getTime() - startTime.getTime())
       setElapsedTime(elapsed)
-    }, 1000)
+    }, 100);
 
     return () => clearInterval(timer)
-  }, [startTime, isGameComplete]) // Add isGameComplete to dependencies
+  }, [startTime, isGameComplete]); // Add isGameComplete to dependencies
+
+  // Effect to handle Enter key press for Play Again
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (isGameComplete && event.key === 'Enter') {
+        handlePlayAgain();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [isGameComplete]); // Depend on isGameComplete to only add listener when needed
 
   const handleInputChange = (index: number, value: string) => {
     if (value.length > 1) return
@@ -133,10 +148,17 @@ function Game() {
         fetchRandomPhrase(); // Get a new phrase and reset game state
     };
 
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60)
-    const remainingSeconds = seconds % 60
-    return format(new Date(2000, 0, 1, 0, minutes, remainingSeconds), 'mm:ss')
+  const formatTime = (milliseconds: number) => {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const remainingSeconds = totalSeconds % 60;
+    const remainingMilliseconds = milliseconds % 1000;
+
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+    const formattedMilliseconds = String(remainingMilliseconds).padStart(3, '0');
+
+    return `${formattedMinutes}:${formattedSeconds}:${formattedMilliseconds}`;
   }
 
   if (!phrase) {
@@ -177,7 +199,7 @@ function Game() {
           ))}
         </div>
 
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 fixed bottom-4 left-0 right-0 z-10">
           <div className="text-3xl font-mono font-bold text-primary-600">
             {formatTime(elapsedTime)}
           </div>

@@ -3,62 +3,85 @@ from models import Phrase
 from database import SessionLocal
 import random
 
-# Common English phrases
+# Common English phrases (limited to max 2 words and approx. 500 total, >= 70% single words <= 15 characters)
 phrases = [
-    # Single words
-    "apple", "banana", "cherry", "dolphin", "elephant", "freedom", "garden", "happiness",
-    "imagine", "journey", "kindness", "laughter", "mountain", "nature", "ocean", "peace",
-    "quality", "rainbow", "sunshine", "treasure", "umbrella", "victory", "wisdom", "xylophone",
-    "yellow", "zebra",
+    # Single words (expanded list, <= 15 characters)
+    "apple", "banana", "cherry", "garden", "nature", "ocean", "peace", "wisdom", "yellow", "zebra",
+    "ability", "absence", "academy", "account", "achieve", "acquire", "address", "advance",
+    "advisor", "against", "airline", "airport", "alcohol", "already", "analyst", "ancient",
+    "another", "anxiety", "anybody", "anymore", "approve", "arrange", "arrival", "article",
+    "artwork", "athlete", "attempt", "attract", "auction", "authority", "average", "balance",
+    "bargain", "barrier", "battery", "believe", "beneath", "benefit", "biology", "blanket",
+    "boundary", "briefly", "brother", "burglar", "cabinet", "capture", "carrier", "caution",
+    "ceiling", "central", "century", "certain", "chamber", "channel", "chapter", "charity",
+    "chemist", "clarify", "climate", "collect", "combine", "comfort", "command", "comment",
+    "company", "compare", "compete", "complex", "connect", "consider", "consist", "contact",
+    "contain", "contest", "context", "control", "convert", "correct", "council", "country",
+    "courage", "crystal", "culture", "curious", "current", "custody", "declare", "default",
+    "defense", "deflect", "deliver", "density", "deposit", "despite", "destroy", "develop",
+    "diamond", "digital", "diploma", "dispute", "distant", "disturb", "divided", "dolphin",
+    "economy", "edition", "educate", "elegant", "element", "embrace", "emotion", "enhance",
+    "enquire", "essence", "ethical", "evident", "examine", "example", "excited", "execute",
+    "expense", "explore", "express", "extend", "extreme", "factory", "faculty", "fantasy",
+    "fashion", "feature", "federal", "fiction", "fifteen", "fighter", "finance", "finding",
+    "fishing", "fitness", "fixture", "florist", "forever", "fortune", "founder", "freedom",
+    "friendly", "fulfill", "gateway", "general", "genesis", "genuine", "giraffe", "glimpse",
+    "graphic", "gravity", "grocery", "guarantee", "guardian", "habitat", "handful", "handler",
+    "happily", "harvest", "heading", "healthy", "hearsay", "heating", "heavily", "helpful",
+    "helpful", "herself", "highway", "himself", "history", "holiday", "homeless", "horizon",
+    "however", "hundred", "hunting", "imagine", "immediately", "improve", "include", "initial",
+    "inspire", "install", "instead", "intense", "interact", "invoice", "involve", "journal",
+    "journey", "justice", "justify", "keyword", "kindness", "kingdom", "kitchen", "lateral",
+    "laughter", "leading", "leaflet", "leather", "leaving", "legally", "legend", "leisure",
+    "liberal", "library", "license", "limited", "listing", "literal", "loyalty", "machine",
+    "manager", "mankind", "marital", "massive", "master", "material", "maximum", "meaning",
+    "measure", "medical", "medium", "mention", "message", "mineral", "minimum", "mission",
+    "mistake", "mixture", "mobile", "modest", "modify", "moment", "monitor", "morning",
+    "motel", "mother", "motion", "moving", "myself", "nation", "native", "natural",
+    "nearly", "neglect", "neither", "nervous", "network", "neutral", "namely", "ninety",
+    "normal", "notice", "novelist", "nuclear", "nursery", "obvious", "offense", "officer",
+    "opening", "operate", "opinion", "optical", "organic", "outcome", "outline", "outside",
+    "package", "painter", "parking", "partner", "passage", "passion", "patient", "pattern",
+    "payment", "penalty", "perfect", "perform", "perhaps", "permits", "persuade", "picture",
+    "pioneer", "plastic", "poetical", "portion", "posture", "poverty", "precise", "predict",
+    "premier", "prepare", "present", "prevent", "primary", "printer", "privacy", "private",
+    "problem", "proceed", "process", "produce", "program", "project", "promote", "protest",
+    "provide", "province", "publish", "purpose", "quality", "quarter", "radical", "railway",
+    "readily", "reality", "receive", "recover", "reflect", "regular", "related", "release",
+    "remain", "removal", "require", "reserve", "resolve", "respect", "respond", "restore",
+    "retired", "revenue", "reverse", "roughly", "routine", "running", "satisfy", "schedule",
+    "science", "scratch", "seating", "section", "segment", "selfish", "serious", "service",
+    "setting", "seventh", "several", "shallow", "sharing", "shelter", "shortly", "showing",
+    "silence", "singing", "skilled", "slavery", "sleeper", "smoking", "society", "somehow",
+    "someone", "speaker", "special", "species", "sponsor", "station", "storage", "strange",
+    "stretch", "student", "subject", "succeed", "suggest", "summary", "support", "surely",
+    "surface", "surgery", "survive", "suspect", "sustain", "teacher", "tension", "testing",
+    "theater", "therapy", "thereby", "thought", "through", "tobacco", "tonight", "totally",
+    "towards", "traffic", "trainer", "trouble", "typical", "unhappy", "uniform", "unknown",
+    "unusual", "utility", "variety", "vehicle", "venture", "version", "veteran", "victory",
+    "village", "violent", "visible", "visitor", "visual", "vitamin", "volume", "warning",
+    "weakness", "wealthy", "weekend", "welcome", "welfare", "whoever", "whomever", "widely",
+    "willing", "winning", "written", "yourself",
 
-    # Two-word phrases
-    "blue sky", "cold water", "dark night", "early morning", "fresh air", "golden sun",
+    # Two-word phrases (filtered for total chars <= 25)
+    "blue sky", "cold water", "dark night", "fresh air", "golden sun",
     "happy days", "inner peace", "jumping joy", "kind heart", "loving care", "mighty river",
-    "northern lights", "open door", "perfect day", "quiet night", "running water", "sweet dreams",
-    "tropical breeze", "under stars", "vibrant colors", "warm sunshine", "yellow flowers",
+    "open door", "quiet night", "sweet dreams", "under stars",
     "zesty lemon",
-
-    # Three-word phrases
-    "a beautiful day", "birds in flight", "clouds in sky", "dancing in rain", "early morning walk",
-    "fresh morning air", "gentle summer breeze", "happy little moments", "in the garden",
-    "jumping for joy", "kind and gentle", "laughing out loud", "morning coffee time",
-    "nature's sweet song", "ocean waves crashing", "peaceful mountain view", "quiet country road",
-    "running through fields", "sunset on beach", "trees in wind", "under starry night",
-    "vibrant autumn colors", "walking in sunshine", "yellow daffodils bloom",
-    "zephyr through trees",
-
-    # Common expressions
-    "good morning", "thank you", "see you later", "have a nice day", "good night",
-    "happy birthday", "merry christmas", "happy new year", "welcome home", "take care",
-    "best wishes", "good luck", "well done", "nice to meet you", "how are you",
-    "excuse me", "i'm sorry", "you're welcome", "good afternoon", "good evening",
-
-    # Nature phrases
-    "autumn leaves falling", "birds singing sweetly", "crystal clear water", "dawn breaking",
-    "evening stars twinkle", "forest path winding", "gentle rain falling",
-    "island paradise", "jungle sounds", "lake reflecting sky", "mountain peak high",
-    "northern lights dance", "ocean waves rolling", "pine trees swaying", "quiet forest stream",
-    "river flowing gently", "sunset colors painting", "tropical breeze blowing",
-    "valley of flowers", "waterfall cascading", "yellow leaves falling",
-
-    # Action phrases
-    "dancing in moonlight", "flying through clouds", "jumping over puddles", "running in rain",
-    "swimming in ocean", "walking through forest", "climbing mountains", "sailing on waves",
-    "skiing down slopes", "surfing the waves", "hiking through woods", "biking along path",
-    "fishing in lake", "camping under stars", "exploring caves", "gardening in sunshine",
-    "painting landscapes", "photographing nature", "stargazing at night", "bird watching",
-
-    # Descriptive phrases
-    "bright morning sun", "cool evening breeze", "deep blue ocean", "early spring flowers",
-    "fresh mountain air", "golden autumn leaves", "high mountain peaks", "icy winter morning",
-    "jeweled night sky", "kind gentle soul", "lush green forest", "majestic mountain range",
-    "northern star shining", "peaceful country road", "quiet mountain lake", "rustling autumn leaves",
-    "sweet summer rain", "tropical paradise", "under starry sky", "vibrant spring colors",
-    "warm summer night", "yellow daffodils bloom"
+    "have fun", "be kind", "thank again", "well play", "my turn",
+    "your turn", "good try", "nice shot", "big win", "small win",
+    "red ball", "blue car", "green tree", "tall building", "short story",
+    "long day", "hot sun", "cold wind", "new house", "old house",
+    "fast car", "slow car", "happy face", "sad face", "big dog",
+    "small cat", "wild animal", "pet animal", "loud music", "quiet music",
+    "bright light", "dark shadow", "high mountain", "low valley", "deep water",
+    "shallow water", "clean room", "dirty room", "hard work", "easy work",
+    "new book", "old book", "hot tea", "cold tea", "warm milk",
+    "cold milk", "big apple", "small banana", "red cherry", "green grape"
 ]
 
 def seed_database(session: Session, num_phrases: int = 1000):
-    # Create phrases
+    # Create phrases from the curated list
     selected_phrases = random.sample(phrases, min(num_phrases, len(phrases)))
     phrase_objects = [Phrase(phrase=phrase) for phrase in selected_phrases]
 
