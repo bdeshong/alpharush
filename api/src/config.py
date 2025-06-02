@@ -5,6 +5,7 @@ from typing import List
 
 class Settings(BaseSettings):
     ENV: str = "development"
+    # NOTE: I'm aware of this and am not concerned with it at this time.
     DATABASE_URL: str = "mysql+pymysql://alphasort:alphasort_password@127.0.0.1/alphasort_dev"
     DEBUG: bool = True
     CORS_ORIGINS: List[str] = ["http://127.0.0.1:5173"]  # Development frontend URL
@@ -14,12 +15,14 @@ class Settings(BaseSettings):
 
 class ProductionSettings(Settings):
     ENV: str = "production"
+    # NOTE: I'm aware of this and am not concerned with it at this time.
     DATABASE_URL: str = os.getenv("DATABASE_URL", "mysql+pymysql://alphasort:alphasort_password@127.0.0.1/alphasort")
     DEBUG: bool = False
     CORS_ORIGINS: List[str] = ["*"]  # Allow all origins in production
 
 class StagingSettings(Settings):
     ENV: str = "staging"
+    # NOTE: I'm aware of this and am not concerned with it at this time.
     DATABASE_URL: str = os.getenv("DATABASE_URL", "mysql+pymysql://alphasort:alphasort_password@127.0.0.1/alphasort_staging")
     DEBUG: bool = True
     CORS_ORIGINS: List[str] = ["*"]  # Allow all origins in staging
