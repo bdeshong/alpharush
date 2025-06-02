@@ -2,6 +2,8 @@
 
 A word game where players arrange letters of words in alphabetical order.
 
+**Proof-of-concept project using Cursor to build a small FastAPI API and a frontend for it.**
+
 ## Project Structure
 
 ```
