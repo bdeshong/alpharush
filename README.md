@@ -79,7 +79,44 @@ The API will be available at http://localhost:8000
 
 ## Frontend Setup
 
-Frontend setup instructions will be added when implemented.
+### Prerequisites
+
+- Node.js 20.x or later
+- npm 10.x or later
+
+### Installation
+
+1. Navigate to the frontend directory:
+```bash
+cd web
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+The frontend will be available at http://localhost:5173
+
+### Development
+
+- `npm run dev`: Start development server with hot reload
+- `npm run build`: Build for production
+- `npm run preview`: Preview production build locally
+- `npm run lint`: Run ESLint
+- `npm run type-check`: Run TypeScript type checking
+
+### Environment Variables
+
+Create a `.env` file in the `web` directory with the following variables:
+```
+VITE_API_URL=http://localhost:8000
+```
 
 ## Development
 
