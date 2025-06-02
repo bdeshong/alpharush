@@ -43,3 +43,6 @@ coverage.xml
 
 # Docker
 .docker/
+
+# Frontend
+**/node_modules/**

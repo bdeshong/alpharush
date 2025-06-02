@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 min-h-screen;
+  }
+}
+
+@layer components {
+  .input-letter {
+    @apply w-12 h-12 text-center text-2xl font-bold border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500;
+  }
+
+  .input-letter.error {
+    @apply border-red-500 bg-red-50;
+  }
+
+  .input-letter.correct {
+    @apply border-green-500 bg-green-50;
+  }
+}
