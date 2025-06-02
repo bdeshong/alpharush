@@ -4,6 +4,8 @@ A word game where players arrange letters of words in alphabetical order.
 
 **Proof-of-concept project using Cursor to build a small FastAPI API and a frontend for it.**
 
+**Backend uses Python 3.12, MySQL (via Docker), SQLAlchemy, and Pydantic. Frontend uses TypeScript, React, and Tailwind.**
+
 ## Project Structure
 
 ```
